@@ -179,7 +179,7 @@ const AddPageButton: React.FC<AddPageButtonProps> = ({ onClick, position }) => {
 			<div
 				className={`
         absolute left-1/2 -translate-x-1/2 transition-all duration-200
-        ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}
+        ${isHovered ? 'opacity-100 scale-100' : 'opacity-100 scale-90'}
       `}>
 				<button
 					onClick={onClick}
