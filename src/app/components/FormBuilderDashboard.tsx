@@ -144,7 +144,7 @@ const SortablePage: React.FC<SortablePageProps> = ({
 	return (
 		<div
 			ref={setNodeRef}
-			style={style}
+			style={{...style, marginInline: 26}}
 			{...attributes}
 			{...listeners}
 			onClick={onClick}
@@ -156,7 +156,8 @@ const SortablePage: React.FC<SortablePageProps> = ({
 				? 'bg-gray-900 text-white'
 				: 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
 		}
-      `}>
+      `}
+      >
 			{getIcon()}
 			<span className='text-sm font-medium'>{page.name}</span>
 		</div>
@@ -290,7 +291,7 @@ export default function FormBuilderDashboard() {
 					<h1 className='text-lg font-medium text-gray-700'>
 						My form
 					</h1>
-					<nav className='flex gap-6'>
+					<nav className='flex gap-28'>
 						<button className='text-sm font-medium text-gray-900 pb-2 border-b-2 border-gray-900'>
 							Edit
 						</button>
@@ -476,73 +477,57 @@ export default function FormBuilderDashboard() {
 
 			{/* Bottom Navigation */}
 			<footer className='bg-white border-t border-gray-200 px-6 py-4'>
-				<div className='flex items-center gap-2'>
-					<button
-						onClick={() => handleAddPageClick(0)}
-						className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors'>
-						<Plus className='w-4 h-4' />
-						Add page
-					</button>
+  <div className='flex items-center gap-2'>
+    <button
+      onClick={() => handleAddPageClick(0)}
+      className='flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors'
+    >
+      <Plus className='w-4 h-4' />
+      Add page
+    </button>
 
-					<DndContext
-						sensors={sensors}
-						collisionDetection={closestCenter}
-						onDragEnd={handleDragEnd}>
-						<SortableContext
-							items={pages}
-							strategy={
-								horizontalListSortingStrategy
-							}>
-							<div className='flex items-center gap-2'>
-								{pages.map((page, index) => (
-									<React.Fragment
-										key={page.id}>
-										{index > 0 && (
-											<AddPageButton
-												onClick={() =>
-													handleAddPageClick(
-														index
-													)
-												}
-												position={
-													index
-												}
-											/>
-										)}
-										<SortablePage
-											page={page}
-											isActive={
-												activePage ===
-												page.id
-											}
-											onClick={() =>
-												setActivePage(
-													page.id
-												)
-											}
-											onContextMenu={
-												handleContextMenu
-											}
-										/>
-									</React.Fragment>
-								))}
-								<AddPageButton
-									onClick={() =>
-										handleAddPageClick(
-											pages.length
-										)
-									}
-									position={pages.length}
-								/>
-							</div>
-						</SortableContext>
-					</DndContext>
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={pages}
+        strategy={horizontalListSortingStrategy}
+      >
+        {/* 🟡  This container now has `gap-6` for extra spacing  */}
+        <div className='flex items-center gap-6'>
+          {pages.map((page, index) => (
+            <React.Fragment key={page.id}>
+              {index > 0 && (
+                <AddPageButton
+                  onClick={() => handleAddPageClick(index)}
+                  position={index}
+                />
+              )}
+              <SortablePage
+                page={page}
+                isActive={activePage === page.id}
+                onClick={() => setActivePage(page.id)}
+                onContextMenu={handleContextMenu}
+              />
+            </React.Fragment>
+          ))}
 
-					<div className='ml-auto flex items-center gap-4 text-sm text-gray-600'>
-						<span>Logic</span>
-					</div>
-				</div>
-			</footer>
+          {/* final “+” button */}
+          <AddPageButton
+            onClick={() => handleAddPageClick(pages.length)}
+            position={pages.length}
+          />
+        </div>
+      </SortableContext>
+    </DndContext>
+
+    <div className='ml-auto flex items-center gap-4 text-sm text-gray-600'>
+      <span>Logic</span>
+    </div>
+  </div>
+</footer>
 
 			{/* Context Menu */}
 			{contextMenu && (
