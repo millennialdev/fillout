@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 'use client'
 
 import {
@@ -31,7 +32,6 @@ import {
  Image,
  List,
  Mail,
- MoreVertical,
  Plus,
  ToggleLeft,
  Trash2,
@@ -170,6 +170,7 @@ interface AddPageButtonProps {
 
 const AddPageButton: React.FC<AddPageButtonProps> = ({ onClick, position }) => {
 	const [isHovered, setIsHovered] = useState(false);
+ console.log('AddPageButton rendered at position:', position);
 
 	return (
 		<div
